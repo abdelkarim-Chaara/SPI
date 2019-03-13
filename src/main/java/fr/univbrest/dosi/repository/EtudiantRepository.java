@@ -1,10 +1,9 @@
-package fr.univbrest.dosi.repositories;
+package fr.univbrest.dosi.repository;
+
 
 import fr.univbrest.dosi.bean.Etudiant;
 
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
 
 
 public interface EtudiantRepository  extends CrudRepository <Etudiant, String> {
@@ -12,4 +11,3 @@ public interface EtudiantRepository  extends CrudRepository <Etudiant, String> {
 	
 
 }
-

@@ -29,6 +29,7 @@ public class EtudiantController {
 
 	public List<Etudiant> GetAllEtudiants() {
 
+		//return null;
 		return business.GetAllEtudiants();
 
 	}
