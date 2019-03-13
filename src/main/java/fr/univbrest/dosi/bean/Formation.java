@@ -2,58 +2,44 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
 /**
- * The persistent class for the FORMATION database table.
+ * The persistent class for the formation database table.
  * 
  */
 @Entity
-@Table(name="FORMATION")
 @NamedQuery(name="Formation.findAll", query="SELECT f FROM Formation f")
 public class Formation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="CODE_FORMATION")
+	@Column(name="code_formation")
 	private String codeFormation;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="DEBUT_ACCREDITATION")
+	@Column(name="debut_accreditation")
 	private Date debutAccreditation;
 
 	private String diplome;
 
-	@Column(name="DOUBLE_DIPLOME")
+	@Column(name="double_diplome")
 	private String doubleDiplome;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="FIN_ACCREDITATION")
+	@Column(name="fin_accreditation")
 	private Date finAccreditation;
 
-	@Column(name="N0_ANNEE")
-	private BigDecimal n0Annee;
+	@Column(name="n0_annee")
+	private int n0Annee;
 
-	@Column(name="NOM_FORMATION")
+	@Column(name="nom_formation")
 	private String nomFormation;
 
 	public Formation() {
 	}
 
-	public Formation(String codeFormation, Date debutAccreditation, String diplome, String doubleDiplome,
-			Date finAccreditation, BigDecimal n0Annee, String nomFormation) {
-		super();
-		this.codeFormation = codeFormation;
-		this.debutAccreditation = debutAccreditation;
-		this.diplome = diplome;
-		this.doubleDiplome = doubleDiplome;
-		this.finAccreditation = finAccreditation;
-		this.n0Annee = n0Annee;
-		this.nomFormation = nomFormation;
-	}
-	
 	public String getCodeFormation() {
 		return this.codeFormation;
 	}
@@ -94,11 +80,11 @@ public class Formation implements Serializable {
 		this.finAccreditation = finAccreditation;
 	}
 
-	public BigDecimal getN0Annee() {
+	public int getN0Annee() {
 		return this.n0Annee;
 	}
 
-	public void setN0Annee(BigDecimal n0Annee) {
+	public void setN0Annee(int n0Annee) {
 		this.n0Annee = n0Annee;
 	}
 

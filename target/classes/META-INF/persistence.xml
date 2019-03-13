@@ -11,5 +11,20 @@
 		<class>fr.univbrest.dosi.bean.PromotionPK</class>
 		<class>fr.univbrest.dosi.bean.UniteEnseignement</class>
 		<class>fr.univbrest.dosi.bean.UniteEnseignementPK</class>
+		<class>fr.univbrest.dosi.bean.Authentification</class>
+		<class>fr.univbrest.dosi.bean.CgRefCode</class>
+		<class>fr.univbrest.dosi.bean.Droit</class>
+		<class>fr.univbrest.dosi.bean.DroitPK</class>
+		<class>fr.univbrest.dosi.bean.Evaluation</class>
+		<class>fr.univbrest.dosi.bean.Qualificatif</class>
+		<class>fr.univbrest.dosi.bean.Question</class>
+		<class>fr.univbrest.dosi.bean.QuestionEvaluation</class>
+		<class>fr.univbrest.dosi.bean.ReponseEvaluation</class>
+		<class>fr.univbrest.dosi.bean.ReponseQuestion</class>
+		<class>fr.univbrest.dosi.bean.ReponseQuestionPK</class>
+		<class>fr.univbrest.dosi.bean.Rubrique</class>
+		<class>fr.univbrest.dosi.bean.RubriqueEvaluation</class>
+		<class>fr.univbrest.dosi.bean.RubriqueQuestion</class>
+		<class>fr.univbrest.dosi.bean.RubriqueQuestionPK</class>
 	</persistence-unit>
 </persistence>

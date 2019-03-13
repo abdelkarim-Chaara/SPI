@@ -2,45 +2,43 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
 /**
- * The persistent class for the ETUDIANT database table.
+ * The persistent class for the etudiant database table.
  * 
  */
 @Entity
-@Table(name="ETUDIANT")
 @NamedQuery(name="Etudiant.findAll", query="SELECT e FROM Etudiant e")
 public class Etudiant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="NO_ETUDIANT")
+	@Column(name="no_etudiant")
 	private String noEtudiant;
 
 	private String adresse;
 
-	@Column(name="CODE_POSTAL")
+	@Column(name="code_postal")
 	private String codePostal;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATE_NAISSANCE")
+	@Column(name="date_naissance")
 	private Date dateNaissance;
 
 	private String email;
 
-	@Column(name="EMAIL_UBO")
+	@Column(name="email_ubo")
 	private String emailUbo;
 
-	@Column(name="GROUPE_ANGLAIS")
-	private BigDecimal groupeAnglais;
+	@Column(name="groupe_anglais")
+	private int groupeAnglais;
 
-	@Column(name="GROUPE_TP")
-	private BigDecimal groupeTp;
+	@Column(name="groupe_tp")
+	private int groupeTp;
 
-	@Column(name="LIEU_NAISSANCE")
+	@Column(name="lieu_naissance")
 	private String lieuNaissance;
 
 	private String mobile;
@@ -49,7 +47,7 @@ public class Etudiant implements Serializable {
 
 	private String nom;
 
-	@Column(name="PAYS_ORIGINE")
+	@Column(name="pays_origine")
 	private String paysOrigine;
 
 	private String prenom;
@@ -58,18 +56,10 @@ public class Etudiant implements Serializable {
 
 	private String telephone;
 
-	@Column(name="UNIVERSITE_ORIGINE")
+	@Column(name="universite_origine")
 	private String universiteOrigine;
 
 	private String ville;
-
-	//uni-directional many-to-one association to Promotion
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="ANNEE_UNIVERSITAIRE"),
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION")
-		})
-	private Promotion promotion;
 
 	public Etudiant() {
 	}
@@ -122,19 +112,19 @@ public class Etudiant implements Serializable {
 		this.emailUbo = emailUbo;
 	}
 
-	public BigDecimal getGroupeAnglais() {
+	public int getGroupeAnglais() {
 		return this.groupeAnglais;
 	}
 
-	public void setGroupeAnglais(BigDecimal groupeAnglais) {
+	public void setGroupeAnglais(int groupeAnglais) {
 		this.groupeAnglais = groupeAnglais;
 	}
 
-	public BigDecimal getGroupeTp() {
+	public int getGroupeTp() {
 		return this.groupeTp;
 	}
 
-	public void setGroupeTp(BigDecimal groupeTp) {
+	public void setGroupeTp(int groupeTp) {
 		this.groupeTp = groupeTp;
 	}
 
@@ -216,14 +206,6 @@ public class Etudiant implements Serializable {
 
 	public void setVille(String ville) {
 		this.ville = ville;
-	}
-
-	public Promotion getPromotion() {
-		return this.promotion;
-	}
-
-	public void setPromotion(Promotion promotion) {
-		this.promotion = promotion;
 	}
 
 }

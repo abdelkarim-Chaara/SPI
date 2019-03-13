@@ -2,50 +2,44 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.math.BigDecimal;
 import java.util.Date;
 
 
 /**
- * The persistent class for the CANDIDAT database table.
+ * The persistent class for the candidat database table.
  * 
  */
-
 @Entity
-@Table(name="CANDIDAT")
 @NamedQuery(name="Candidat.findAll", query="SELECT c FROM Candidat c")
 public class Candidat implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="NO_CANDIDAT")
+	@Column(name="no_candidat")
 	private String noCandidat;
 
 	private String adresse;
 
-	@Column(name="CODE_POSTAL")
+	@Column(name="code_postal")
 	private String codePostal;
 
-	@Column(name="CONFIRMATION_CANDIDAT")
+	@Column(name="confirmation_candidat")
 	private String confirmationCandidat;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATE_NAISSANCE")
+	@Column(name="date_naissance")
 	private Date dateNaissance;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATE_REPONSE_CANDIDAT")
+	@Column(name="date_reponse_candidat")
 	private Date dateReponseCandidat;
 
 	private String email;
 
-	@Column(name="LIEU_NAISSANCE")
+	@Column(name="lieu_naissance")
 	private String lieuNaissance;
 
-	@Column(name="LISTE_SELECTION")
+	@Column(name="liste_selection")
 	private String listeSelection;
 
 	private String mobile;
@@ -54,42 +48,26 @@ public class Candidat implements Serializable {
 
 	private String nom;
 
-	@Column(name="PAYS_ORIGINE")
+	@Column(name="pays_origine")
 	private String paysOrigine;
 
 	private String prenom;
 
-	@Column(name="SELECTION_NO_ORDRE")
-	private BigDecimal selectionNoOrdre;
+	@Column(name="selection_no_ordre")
+	private int selectionNoOrdre;
 
 	private String sexe;
 
 	private String telephone;
 
-	@Column(name="UNIVERSITE_ORIGINE")
+	@Column(name="universite_origine")
 	private String universiteOrigine;
 
 	private String ville;
 
-	//uni-directional many-to-one association to Promotion
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="ANNEE_UNIVERSITAIRE"),
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION")
-		})
-	private Promotion promotion;
-
 	public Candidat() {
 	}
 
-	public Candidat(String noCandidat, String nom, String prenom, String universiteOrigine) {
-		super();
-		this.noCandidat = noCandidat;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.universiteOrigine = universiteOrigine;
-	}
-	
 	public String getNoCandidat() {
 		return this.noCandidat;
 	}
@@ -202,11 +180,11 @@ public class Candidat implements Serializable {
 		this.prenom = prenom;
 	}
 
-	public BigDecimal getSelectionNoOrdre() {
+	public int getSelectionNoOrdre() {
 		return this.selectionNoOrdre;
 	}
 
-	public void setSelectionNoOrdre(BigDecimal selectionNoOrdre) {
+	public void setSelectionNoOrdre(int selectionNoOrdre) {
 		this.selectionNoOrdre = selectionNoOrdre;
 	}
 
@@ -240,14 +218,6 @@ public class Candidat implements Serializable {
 
 	public void setVille(String ville) {
 		this.ville = ville;
-	}
-
-	public Promotion getPromotion() {
-		return this.promotion;
-	}
-
-	public void setPromotion(Promotion promotion) {
-		this.promotion = promotion;
 	}
 
 }

@@ -2,15 +2,14 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 /**
- * The persistent class for the UNITE_ENSEIGNEMENT database table.
+ * The persistent class for the unite_enseignement database table.
  * 
  */
 @Entity
-@Table(name="UNITE_ENSEIGNEMENT")
+@Table(name="unite_enseignement")
 @NamedQuery(name="UniteEnseignement.findAll", query="SELECT u FROM UniteEnseignement u")
 public class UniteEnseignement implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,26 +21,16 @@ public class UniteEnseignement implements Serializable {
 
 	private String designation;
 
-	@Column(name="NBH_CM")
-	private BigDecimal nbhCm;
+	@Column(name="nbh_cm")
+	private int nbhCm;
 
-	@Column(name="NBH_TD")
-	private BigDecimal nbhTd;
+	@Column(name="nbh_td")
+	private int nbhTd;
 
-	@Column(name="NBH_TP")
-	private BigDecimal nbhTp;
+	@Column(name="nbh_tp")
+	private int nbhTp;
 
 	private String semestre;
-
-	//uni-directional many-to-one association to Enseignant
-	@ManyToOne
-	@JoinColumn(name="NO_ENSEIGNANT")
-	private Enseignant enseignant;
-
-	//uni-directional many-to-one association to Formation
-	@ManyToOne
-	@JoinColumn(name="CODE_FORMATION", insertable=false, updatable=false)
-	private Formation formation;
 
 	public UniteEnseignement() {
 	}
@@ -70,27 +59,27 @@ public class UniteEnseignement implements Serializable {
 		this.designation = designation;
 	}
 
-	public BigDecimal getNbhCm() {
+	public int getNbhCm() {
 		return this.nbhCm;
 	}
 
-	public void setNbhCm(BigDecimal nbhCm) {
+	public void setNbhCm(int nbhCm) {
 		this.nbhCm = nbhCm;
 	}
 
-	public BigDecimal getNbhTd() {
+	public int getNbhTd() {
 		return this.nbhTd;
 	}
 
-	public void setNbhTd(BigDecimal nbhTd) {
+	public void setNbhTd(int nbhTd) {
 		this.nbhTd = nbhTd;
 	}
 
-	public BigDecimal getNbhTp() {
+	public int getNbhTp() {
 		return this.nbhTp;
 	}
 
-	public void setNbhTp(BigDecimal nbhTp) {
+	public void setNbhTp(int nbhTp) {
 		this.nbhTp = nbhTp;
 	}
 
@@ -100,22 +89,6 @@ public class UniteEnseignement implements Serializable {
 
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
-	}
-
-	public Enseignant getEnseignant() {
-		return this.enseignant;
-	}
-
-	public void setEnseignant(Enseignant enseignant) {
-		this.enseignant = enseignant;
-	}
-
-	public Formation getFormation() {
-		return this.formation;
-	}
-
-	public void setFormation(Formation formation) {
-		this.formation = formation;
 	}
 
 }
