@@ -2,14 +2,15 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the element_constitutif database table.
+ * The persistent class for the ELEMENT_CONSTITUTIF database table.
  * 
  */
 @Entity
-@Table(name="element_constitutif")
+@Table(name="ELEMENT_CONSTITUTIF")
 @NamedQuery(name="ElementConstitutif.findAll", query="SELECT e FROM ElementConstitutif e")
 public class ElementConstitutif implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,14 +22,31 @@ public class ElementConstitutif implements Serializable {
 
 	private String designation;
 
-	@Column(name="nbh_cm")
+	@Column(name="NBH_CM")
 	private byte nbhCm;
 
-	@Column(name="nbh_td")
+	@Column(name="NBH_TD")
 	private byte nbhTd;
 
-	@Column(name="nbh_tp")
+	@Column(name="NBH_TP")
 	private byte nbhTp;
+
+	//bi-directional many-to-one association to Enseignant
+	@ManyToOne
+	@JoinColumn(name="NO_ENSEIGNANT")
+	private Enseignant enseignant;
+
+	//bi-directional many-to-one association to UniteEnseignement
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION"),
+		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE")
+		})
+	private UniteEnseignement uniteEnseignement;
+
+	//bi-directional many-to-one association to Evaluation
+	@OneToMany(mappedBy="elementConstitutif")
+	private List<Evaluation> evaluations;
 
 	public ElementConstitutif() {
 	}
@@ -79,6 +97,44 @@ public class ElementConstitutif implements Serializable {
 
 	public void setNbhTp(byte nbhTp) {
 		this.nbhTp = nbhTp;
+	}
+
+	public Enseignant getEnseignant() {
+		return this.enseignant;
+	}
+
+	public void setEnseignant(Enseignant enseignant) {
+		this.enseignant = enseignant;
+	}
+
+	public UniteEnseignement getUniteEnseignement() {
+		return this.uniteEnseignement;
+	}
+
+	public void setUniteEnseignement(UniteEnseignement uniteEnseignement) {
+		this.uniteEnseignement = uniteEnseignement;
+	}
+
+	public List<Evaluation> getEvaluations() {
+		return this.evaluations;
+	}
+
+	public void setEvaluations(List<Evaluation> evaluations) {
+		this.evaluations = evaluations;
+	}
+
+	public Evaluation addEvaluation(Evaluation evaluation) {
+		getEvaluations().add(evaluation);
+		evaluation.setElementConstitutif(this);
+
+		return evaluation;
+	}
+
+	public Evaluation removeEvaluation(Evaluation evaluation) {
+		getEvaluations().remove(evaluation);
+		evaluation.setElementConstitutif(null);
+
+		return evaluation;
 	}
 
 }

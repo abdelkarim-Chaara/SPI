@@ -3,10 +3,11 @@ package fr.univbrest.dosi.bean;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
- * The persistent class for the formation database table.
+ * The persistent class for the FORMATION database table.
  * 
  */
 @Entity
@@ -15,27 +16,35 @@ public class Formation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="code_formation")
+	@Column(name="CODE_FORMATION")
 	private String codeFormation;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="debut_accreditation")
+	@Column(name="DEBUT_ACCREDITATION")
 	private Date debutAccreditation;
 
 	private String diplome;
 
-	@Column(name="double_diplome")
+	@Column(name="DOUBLE_DIPLOME")
 	private String doubleDiplome;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="fin_accreditation")
+	@Column(name="FIN_ACCREDITATION")
 	private Date finAccreditation;
 
-	@Column(name="n0_annee")
+	@Column(name="N0_ANNEE")
 	private int n0Annee;
 
-	@Column(name="nom_formation")
+	@Column(name="NOM_FORMATION")
 	private String nomFormation;
+
+	//bi-directional many-to-one association to Promotion
+	@OneToMany(mappedBy="formation")
+	private List<Promotion> promotions;
+
+	//bi-directional many-to-one association to UniteEnseignement
+	@OneToMany(mappedBy="formation")
+	private List<UniteEnseignement> uniteEnseignements;
 
 	public Formation() {
 	}
@@ -94,6 +103,50 @@ public class Formation implements Serializable {
 
 	public void setNomFormation(String nomFormation) {
 		this.nomFormation = nomFormation;
+	}
+
+	public List<Promotion> getPromotions() {
+		return this.promotions;
+	}
+
+	public void setPromotions(List<Promotion> promotions) {
+		this.promotions = promotions;
+	}
+
+	public Promotion addPromotion(Promotion promotion) {
+		getPromotions().add(promotion);
+		promotion.setFormation(this);
+
+		return promotion;
+	}
+
+	public Promotion removePromotion(Promotion promotion) {
+		getPromotions().remove(promotion);
+		promotion.setFormation(null);
+
+		return promotion;
+	}
+
+	public List<UniteEnseignement> getUniteEnseignements() {
+		return this.uniteEnseignements;
+	}
+
+	public void setUniteEnseignements(List<UniteEnseignement> uniteEnseignements) {
+		this.uniteEnseignements = uniteEnseignements;
+	}
+
+	public UniteEnseignement addUniteEnseignement(UniteEnseignement uniteEnseignement) {
+		getUniteEnseignements().add(uniteEnseignement);
+		uniteEnseignement.setFormation(this);
+
+		return uniteEnseignement;
+	}
+
+	public UniteEnseignement removeUniteEnseignement(UniteEnseignement uniteEnseignement) {
+		getUniteEnseignements().remove(uniteEnseignement);
+		uniteEnseignement.setFormation(null);
+
+		return uniteEnseignement;
 	}
 
 }

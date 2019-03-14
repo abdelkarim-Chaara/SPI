@@ -5,17 +5,17 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the reponse_evaluation database table.
+ * The persistent class for the REPONSE_EVALUATION database table.
  * 
  */
 @Entity
-@Table(name="reponse_evaluation")
+@Table(name="REPONSE_EVALUATION")
 @NamedQuery(name="ReponseEvaluation.findAll", query="SELECT r FROM ReponseEvaluation r")
 public class ReponseEvaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_reponse_evaluation")
+	@Column(name="ID_REPONSE_EVALUATION")
 	private int idReponseEvaluation;
 
 	private String commentaire;
@@ -23,6 +23,16 @@ public class ReponseEvaluation implements Serializable {
 	private String nom;
 
 	private String prenom;
+
+	//bi-directional many-to-one association to Etudiant
+	@ManyToOne
+	@JoinColumn(name="NO_ETUDIANT")
+	private Etudiant etudiant;
+
+	//bi-directional many-to-one association to Evaluation
+	@ManyToOne
+	@JoinColumn(name="ID_EVALUATION")
+	private Evaluation evaluation;
 
 	public ReponseEvaluation() {
 	}
@@ -57,6 +67,22 @@ public class ReponseEvaluation implements Serializable {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	public Etudiant getEtudiant() {
+		return this.etudiant;
+	}
+
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public Evaluation getEvaluation() {
+		return this.evaluation;
+	}
+
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
 	}
 
 }

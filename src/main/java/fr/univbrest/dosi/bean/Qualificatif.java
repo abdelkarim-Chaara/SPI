@@ -2,10 +2,11 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the qualificatif database table.
+ * The persistent class for the QUALIFICATIF database table.
  * 
  */
 @Entity
@@ -14,12 +15,20 @@ public class Qualificatif implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_qualificatif")
+	@Column(name="ID_QUALIFICATIF")
 	private int idQualificatif;
 
 	private String maximal;
 
 	private String minimal;
+
+	//bi-directional many-to-one association to Question
+	@OneToMany(mappedBy="qualificatif")
+	private List<Question> questions;
+
+	//bi-directional many-to-one association to QuestionEvaluation
+	@OneToMany(mappedBy="qualificatif")
+	private List<QuestionEvaluation> questionEvaluations;
 
 	public Qualificatif() {
 	}
@@ -46,6 +55,50 @@ public class Qualificatif implements Serializable {
 
 	public void setMinimal(String minimal) {
 		this.minimal = minimal;
+	}
+
+	public List<Question> getQuestions() {
+		return this.questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
+
+	public Question addQuestion(Question question) {
+		getQuestions().add(question);
+		question.setQualificatif(this);
+
+		return question;
+	}
+
+	public Question removeQuestion(Question question) {
+		getQuestions().remove(question);
+		question.setQualificatif(null);
+
+		return question;
+	}
+
+	public List<QuestionEvaluation> getQuestionEvaluations() {
+		return this.questionEvaluations;
+	}
+
+	public void setQuestionEvaluations(List<QuestionEvaluation> questionEvaluations) {
+		this.questionEvaluations = questionEvaluations;
+	}
+
+	public QuestionEvaluation addQuestionEvaluation(QuestionEvaluation questionEvaluation) {
+		getQuestionEvaluations().add(questionEvaluation);
+		questionEvaluation.setQualificatif(this);
+
+		return questionEvaluation;
+	}
+
+	public QuestionEvaluation removeQuestionEvaluation(QuestionEvaluation questionEvaluation) {
+		getQuestionEvaluations().remove(questionEvaluation);
+		questionEvaluation.setQualificatif(null);
+
+		return questionEvaluation;
 	}
 
 }

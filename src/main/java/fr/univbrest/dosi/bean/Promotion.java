@@ -3,10 +3,11 @@ package fr.univbrest.dosi.bean;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
- * The persistent class for the promotion database table.
+ * The persistent class for the PROMOTION database table.
  * 
  */
 @Entity
@@ -20,28 +21,50 @@ public class Promotion implements Serializable {
 	private String commentaire;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_rentree")
+	@Column(name="DATE_RENTREE")
 	private Date dateRentree;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_reponse_lalp")
+	@Column(name="DATE_REPONSE_LALP")
 	private Date dateReponseLalp;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_reponse_lp")
+	@Column(name="DATE_REPONSE_LP")
 	private Date dateReponseLp;
 
-	@Column(name="lieu_rentree")
+	@Column(name="LIEU_RENTREE")
 	private String lieuRentree;
 
-	@Column(name="nb_max_etudiant")
+	@Column(name="NB_MAX_ETUDIANT")
 	private int nbMaxEtudiant;
 
-	@Column(name="processus_stage")
+	@Column(name="PROCESSUS_STAGE")
 	private String processusStage;
 
-	@Column(name="sigle_promotion")
+	@Column(name="SIGLE_PROMOTION")
 	private String siglePromotion;
+
+	//bi-directional many-to-one association to Candidat
+	@OneToMany(mappedBy="promotion")
+	private List<Candidat> candidats;
+
+	//bi-directional many-to-one association to Etudiant
+	@OneToMany(mappedBy="promotion")
+	private List<Etudiant> etudiants;
+
+	//bi-directional many-to-one association to Evaluation
+	@OneToMany(mappedBy="promotion")
+	private List<Evaluation> evaluations;
+
+	//bi-directional many-to-one association to Enseignant
+	@ManyToOne
+	@JoinColumn(name="NO_ENSEIGNANT")
+	private Enseignant enseignant;
+
+	//bi-directional many-to-one association to Formation
+	@ManyToOne
+	@JoinColumn(name="CODE_FORMATION")
+	private Formation formation;
 
 	public Promotion() {
 	}
@@ -116,6 +139,88 @@ public class Promotion implements Serializable {
 
 	public void setSiglePromotion(String siglePromotion) {
 		this.siglePromotion = siglePromotion;
+	}
+
+	public List<Candidat> getCandidats() {
+		return this.candidats;
+	}
+
+	public void setCandidats(List<Candidat> candidats) {
+		this.candidats = candidats;
+	}
+
+	public Candidat addCandidat(Candidat candidat) {
+		getCandidats().add(candidat);
+		candidat.setPromotion(this);
+
+		return candidat;
+	}
+
+	public Candidat removeCandidat(Candidat candidat) {
+		getCandidats().remove(candidat);
+		candidat.setPromotion(null);
+
+		return candidat;
+	}
+
+	public List<Etudiant> getEtudiants() {
+		return this.etudiants;
+	}
+
+	public void setEtudiants(List<Etudiant> etudiants) {
+		this.etudiants = etudiants;
+	}
+
+	public Etudiant addEtudiant(Etudiant etudiant) {
+		getEtudiants().add(etudiant);
+		etudiant.setPromotion(this);
+
+		return etudiant;
+	}
+
+	public Etudiant removeEtudiant(Etudiant etudiant) {
+		getEtudiants().remove(etudiant);
+		etudiant.setPromotion(null);
+
+		return etudiant;
+	}
+
+	public List<Evaluation> getEvaluations() {
+		return this.evaluations;
+	}
+
+	public void setEvaluations(List<Evaluation> evaluations) {
+		this.evaluations = evaluations;
+	}
+
+	public Evaluation addEvaluation(Evaluation evaluation) {
+		getEvaluations().add(evaluation);
+		evaluation.setPromotion(this);
+
+		return evaluation;
+	}
+
+	public Evaluation removeEvaluation(Evaluation evaluation) {
+		getEvaluations().remove(evaluation);
+		evaluation.setPromotion(null);
+
+		return evaluation;
+	}
+
+	public Enseignant getEnseignant() {
+		return this.enseignant;
+	}
+
+	public void setEnseignant(Enseignant enseignant) {
+		this.enseignant = enseignant;
+	}
+
+	public Formation getFormation() {
+		return this.formation;
+	}
+
+	public void setFormation(Formation formation) {
+		this.formation = formation;
 	}
 
 }

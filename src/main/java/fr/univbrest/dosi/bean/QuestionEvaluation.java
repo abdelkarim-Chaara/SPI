@@ -2,28 +2,45 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the question_evaluation database table.
+ * The persistent class for the QUESTION_EVALUATION database table.
  * 
  */
 @Entity
-@Table(name="question_evaluation")
+@Table(name="QUESTION_EVALUATION")
 @NamedQuery(name="QuestionEvaluation.findAll", query="SELECT q FROM QuestionEvaluation q")
 public class QuestionEvaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_question_evaluation")
+	@Column(name="ID_QUESTION_EVALUATION")
 	private int idQuestionEvaluation;
-
-	@Column(name="id_qualificatif")
-	private int idQualificatif;
 
 	private String intitule;
 
 	private int ordre;
+
+	//bi-directional many-to-one association to Qualificatif
+	@ManyToOne
+	@JoinColumn(name="ID_QUALIFICATIF")
+	private Qualificatif qualificatif;
+
+	//bi-directional many-to-one association to Question
+	@ManyToOne
+	@JoinColumn(name="ID_QUESTION")
+	private Question question;
+
+	//bi-directional many-to-one association to RubriqueEvaluation
+	@ManyToOne
+	@JoinColumn(name="ID_RUBRIQUE_EVALUATION")
+	private RubriqueEvaluation rubriqueEvaluation;
+
+	//bi-directional many-to-one association to ReponseQuestion
+	@OneToMany(mappedBy="questionEvaluation")
+	private List<ReponseQuestion> reponseQuestions;
 
 	public QuestionEvaluation() {
 	}
@@ -34,14 +51,6 @@ public class QuestionEvaluation implements Serializable {
 
 	public void setIdQuestionEvaluation(int idQuestionEvaluation) {
 		this.idQuestionEvaluation = idQuestionEvaluation;
-	}
-
-	public int getIdQualificatif() {
-		return this.idQualificatif;
-	}
-
-	public void setIdQualificatif(int idQualificatif) {
-		this.idQualificatif = idQualificatif;
 	}
 
 	public String getIntitule() {
@@ -58,6 +67,52 @@ public class QuestionEvaluation implements Serializable {
 
 	public void setOrdre(int ordre) {
 		this.ordre = ordre;
+	}
+
+	public Qualificatif getQualificatif() {
+		return this.qualificatif;
+	}
+
+	public void setQualificatif(Qualificatif qualificatif) {
+		this.qualificatif = qualificatif;
+	}
+
+	public Question getQuestion() {
+		return this.question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public RubriqueEvaluation getRubriqueEvaluation() {
+		return this.rubriqueEvaluation;
+	}
+
+	public void setRubriqueEvaluation(RubriqueEvaluation rubriqueEvaluation) {
+		this.rubriqueEvaluation = rubriqueEvaluation;
+	}
+
+	public List<ReponseQuestion> getReponseQuestions() {
+		return this.reponseQuestions;
+	}
+
+	public void setReponseQuestions(List<ReponseQuestion> reponseQuestions) {
+		this.reponseQuestions = reponseQuestions;
+	}
+
+	public ReponseQuestion addReponseQuestion(ReponseQuestion reponseQuestion) {
+		getReponseQuestions().add(reponseQuestion);
+		reponseQuestion.setQuestionEvaluation(this);
+
+		return reponseQuestion;
+	}
+
+	public ReponseQuestion removeReponseQuestion(ReponseQuestion reponseQuestion) {
+		getReponseQuestions().remove(reponseQuestion);
+		reponseQuestion.setQuestionEvaluation(null);
+
+		return reponseQuestion;
 	}
 
 }

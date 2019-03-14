@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the reponse_question database table.
+ * The persistent class for the REPONSE_QUESTION database table.
  * 
  */
 @Entity
-@Table(name="reponse_question")
+@Table(name="REPONSE_QUESTION")
 @NamedQuery(name="ReponseQuestion.findAll", query="SELECT r FROM ReponseQuestion r")
 public class ReponseQuestion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,6 +18,11 @@ public class ReponseQuestion implements Serializable {
 	private ReponseQuestionPK id;
 
 	private int positionnement;
+
+	//bi-directional many-to-one association to QuestionEvaluation
+	@ManyToOne
+	@JoinColumn(name="ID_QUESTION_EVALUATION")
+	private QuestionEvaluation questionEvaluation;
 
 	public ReponseQuestion() {
 	}
@@ -36,6 +41,14 @@ public class ReponseQuestion implements Serializable {
 
 	public void setPositionnement(int positionnement) {
 		this.positionnement = positionnement;
+	}
+
+	public QuestionEvaluation getQuestionEvaluation() {
+		return this.questionEvaluation;
+	}
+
+	public void setQuestionEvaluation(QuestionEvaluation questionEvaluation) {
+		this.questionEvaluation = questionEvaluation;
 	}
 
 }

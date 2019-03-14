@@ -3,10 +3,11 @@ package fr.univbrest.dosi.bean;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
- * The persistent class for the evaluation database table.
+ * The persistent class for the EVALUATION database table.
  * 
  */
 @Entity
@@ -15,11 +16,11 @@ public class Evaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_evaluation")
+	@Column(name="ID_EVALUATION")
 	private int idEvaluation;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="debut_reponse")
+	@Column(name="DEBUT_REPONSE")
 	private Date debutReponse;
 
 	private String designation;
@@ -27,13 +28,55 @@ public class Evaluation implements Serializable {
 	private String etat;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="fin_reponse")
+	@Column(name="FIN_REPONSE")
 	private Date finReponse;
 
-	@Column(name="no_evaluation")
+	@Column(name="NO_EVALUATION")
 	private int noEvaluation;
 
 	private String periode;
+
+	//bi-directional many-to-one association to Droit
+	@OneToMany(mappedBy="evaluation")
+	private List<Droit> droits;
+
+	//bi-directional many-to-one association to ElementConstitutif
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="CODE_EC", referencedColumnName="CODE_EC"),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION"),
+		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE")
+		})
+	private ElementConstitutif elementConstitutif;
+
+	//bi-directional many-to-one association to Enseignant
+	@ManyToOne
+	@JoinColumn(name="NO_ENSEIGNANT")
+	private Enseignant enseignant;
+
+	//bi-directional many-to-one association to Promotion
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION"),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE")
+		})
+	private Promotion promotion;
+
+	//bi-directional many-to-one association to UniteEnseignement
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION"),
+		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE")
+		})
+	private UniteEnseignement uniteEnseignement;
+
+	//bi-directional many-to-one association to ReponseEvaluation
+	@OneToMany(mappedBy="evaluation")
+	private List<ReponseEvaluation> reponseEvaluations;
+
+	//bi-directional many-to-one association to RubriqueEvaluation
+	@OneToMany(mappedBy="evaluation")
+	private List<RubriqueEvaluation> rubriqueEvaluations;
 
 	public Evaluation() {
 	}
@@ -92,6 +135,104 @@ public class Evaluation implements Serializable {
 
 	public void setPeriode(String periode) {
 		this.periode = periode;
+	}
+
+	public List<Droit> getDroits() {
+		return this.droits;
+	}
+
+	public void setDroits(List<Droit> droits) {
+		this.droits = droits;
+	}
+
+	public Droit addDroit(Droit droit) {
+		getDroits().add(droit);
+		droit.setEvaluation(this);
+
+		return droit;
+	}
+
+	public Droit removeDroit(Droit droit) {
+		getDroits().remove(droit);
+		droit.setEvaluation(null);
+
+		return droit;
+	}
+
+	public ElementConstitutif getElementConstitutif() {
+		return this.elementConstitutif;
+	}
+
+	public void setElementConstitutif(ElementConstitutif elementConstitutif) {
+		this.elementConstitutif = elementConstitutif;
+	}
+
+	public Enseignant getEnseignant() {
+		return this.enseignant;
+	}
+
+	public void setEnseignant(Enseignant enseignant) {
+		this.enseignant = enseignant;
+	}
+
+	public Promotion getPromotion() {
+		return this.promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
+	public UniteEnseignement getUniteEnseignement() {
+		return this.uniteEnseignement;
+	}
+
+	public void setUniteEnseignement(UniteEnseignement uniteEnseignement) {
+		this.uniteEnseignement = uniteEnseignement;
+	}
+
+	public List<ReponseEvaluation> getReponseEvaluations() {
+		return this.reponseEvaluations;
+	}
+
+	public void setReponseEvaluations(List<ReponseEvaluation> reponseEvaluations) {
+		this.reponseEvaluations = reponseEvaluations;
+	}
+
+	public ReponseEvaluation addReponseEvaluation(ReponseEvaluation reponseEvaluation) {
+		getReponseEvaluations().add(reponseEvaluation);
+		reponseEvaluation.setEvaluation(this);
+
+		return reponseEvaluation;
+	}
+
+	public ReponseEvaluation removeReponseEvaluation(ReponseEvaluation reponseEvaluation) {
+		getReponseEvaluations().remove(reponseEvaluation);
+		reponseEvaluation.setEvaluation(null);
+
+		return reponseEvaluation;
+	}
+
+	public List<RubriqueEvaluation> getRubriqueEvaluations() {
+		return this.rubriqueEvaluations;
+	}
+
+	public void setRubriqueEvaluations(List<RubriqueEvaluation> rubriqueEvaluations) {
+		this.rubriqueEvaluations = rubriqueEvaluations;
+	}
+
+	public RubriqueEvaluation addRubriqueEvaluation(RubriqueEvaluation rubriqueEvaluation) {
+		getRubriqueEvaluations().add(rubriqueEvaluation);
+		rubriqueEvaluation.setEvaluation(this);
+
+		return rubriqueEvaluation;
+	}
+
+	public RubriqueEvaluation removeRubriqueEvaluation(RubriqueEvaluation rubriqueEvaluation) {
+		getRubriqueEvaluations().remove(rubriqueEvaluation);
+		rubriqueEvaluation.setEvaluation(null);
+
+		return rubriqueEvaluation;
 	}
 
 }

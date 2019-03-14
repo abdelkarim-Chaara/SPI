@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the rubrique_question database table.
+ * The persistent class for the RUBRIQUE_QUESTION database table.
  * 
  */
 @Entity
-@Table(name="rubrique_question")
+@Table(name="RUBRIQUE_QUESTION")
 @NamedQuery(name="RubriqueQuestion.findAll", query="SELECT r FROM RubriqueQuestion r")
 public class RubriqueQuestion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,6 +18,16 @@ public class RubriqueQuestion implements Serializable {
 	private RubriqueQuestionPK id;
 
 	private int ordre;
+
+	//bi-directional many-to-one association to Question
+	@ManyToOne
+	@JoinColumn(name="ID_QUESTION")
+	private Question question;
+
+	//bi-directional many-to-one association to Rubrique
+	@ManyToOne
+	@JoinColumn(name="ID_RUBRIQUE")
+	private Rubrique rubrique;
 
 	public RubriqueQuestion() {
 	}
@@ -36,6 +46,22 @@ public class RubriqueQuestion implements Serializable {
 
 	public void setOrdre(int ordre) {
 		this.ordre = ordre;
+	}
+
+	public Question getQuestion() {
+		return this.question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public Rubrique getRubrique() {
+		return this.rubrique;
+	}
+
+	public void setRubrique(Rubrique rubrique) {
+		this.rubrique = rubrique;
 	}
 
 }

@@ -2,25 +2,40 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the rubrique_evaluation database table.
+ * The persistent class for the RUBRIQUE_EVALUATION database table.
  * 
  */
 @Entity
-@Table(name="rubrique_evaluation")
+@Table(name="RUBRIQUE_EVALUATION")
 @NamedQuery(name="RubriqueEvaluation.findAll", query="SELECT r FROM RubriqueEvaluation r")
 public class RubriqueEvaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_rubrique_evaluation")
+	@Column(name="ID_RUBRIQUE_EVALUATION")
 	private int idRubriqueEvaluation;
 
 	private String designation;
 
 	private int ordre;
+
+	//bi-directional many-to-one association to QuestionEvaluation
+	@OneToMany(mappedBy="rubriqueEvaluation")
+	private List<QuestionEvaluation> questionEvaluations;
+
+	//bi-directional many-to-one association to Evaluation
+	@ManyToOne
+	@JoinColumn(name="ID_EVALUATION")
+	private Evaluation evaluation;
+
+	//bi-directional many-to-one association to Rubrique
+	@ManyToOne
+	@JoinColumn(name="ID_RUBRIQUE")
+	private Rubrique rubrique;
 
 	public RubriqueEvaluation() {
 	}
@@ -47,6 +62,44 @@ public class RubriqueEvaluation implements Serializable {
 
 	public void setOrdre(int ordre) {
 		this.ordre = ordre;
+	}
+
+	public List<QuestionEvaluation> getQuestionEvaluations() {
+		return this.questionEvaluations;
+	}
+
+	public void setQuestionEvaluations(List<QuestionEvaluation> questionEvaluations) {
+		this.questionEvaluations = questionEvaluations;
+	}
+
+	public QuestionEvaluation addQuestionEvaluation(QuestionEvaluation questionEvaluation) {
+		getQuestionEvaluations().add(questionEvaluation);
+		questionEvaluation.setRubriqueEvaluation(this);
+
+		return questionEvaluation;
+	}
+
+	public QuestionEvaluation removeQuestionEvaluation(QuestionEvaluation questionEvaluation) {
+		getQuestionEvaluations().remove(questionEvaluation);
+		questionEvaluation.setRubriqueEvaluation(null);
+
+		return questionEvaluation;
+	}
+
+	public Evaluation getEvaluation() {
+		return this.evaluation;
+	}
+
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
+	}
+
+	public Rubrique getRubrique() {
+		return this.rubrique;
+	}
+
+	public void setRubrique(Rubrique rubrique) {
+		this.rubrique = rubrique;
 	}
 
 }

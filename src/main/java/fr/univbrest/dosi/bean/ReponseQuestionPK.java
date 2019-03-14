@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the reponse_question database table.
+ * The primary key class for the REPONSE_QUESTION database table.
  * 
  */
 @Embeddable
@@ -12,10 +12,10 @@ public class ReponseQuestionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="id_reponse_evaluation")
+	@Column(name="ID_REPONSE_EVALUATION")
 	private int idReponseEvaluation;
 
-	@Column(name="id_question_evaluation")
+	@Column(name="ID_QUESTION_EVALUATION", insertable=false, updatable=false)
 	private int idQuestionEvaluation;
 
 	public ReponseQuestionPK() {

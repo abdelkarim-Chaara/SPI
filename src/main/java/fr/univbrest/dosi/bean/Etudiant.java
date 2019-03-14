@@ -3,10 +3,11 @@ package fr.univbrest.dosi.bean;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
- * The persistent class for the etudiant database table.
+ * The persistent class for the ETUDIANT database table.
  * 
  */
 @Entity
@@ -15,30 +16,30 @@ public class Etudiant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="no_etudiant")
+	@Column(name="NO_ETUDIANT")
 	private String noEtudiant;
 
 	private String adresse;
 
-	@Column(name="code_postal")
+	@Column(name="CODE_POSTAL")
 	private String codePostal;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_naissance")
+	@Column(name="DATE_NAISSANCE")
 	private Date dateNaissance;
 
 	private String email;
 
-	@Column(name="email_ubo")
+	@Column(name="EMAIL_UBO")
 	private String emailUbo;
 
-	@Column(name="groupe_anglais")
+	@Column(name="GROUPE_ANGLAIS")
 	private int groupeAnglais;
 
-	@Column(name="groupe_tp")
+	@Column(name="GROUPE_TP")
 	private int groupeTp;
 
-	@Column(name="lieu_naissance")
+	@Column(name="LIEU_NAISSANCE")
 	private String lieuNaissance;
 
 	private String mobile;
@@ -47,7 +48,7 @@ public class Etudiant implements Serializable {
 
 	private String nom;
 
-	@Column(name="pays_origine")
+	@Column(name="PAYS_ORIGINE")
 	private String paysOrigine;
 
 	private String prenom;
@@ -56,10 +57,22 @@ public class Etudiant implements Serializable {
 
 	private String telephone;
 
-	@Column(name="universite_origine")
+	@Column(name="UNIVERSITE_ORIGINE")
 	private String universiteOrigine;
 
 	private String ville;
+
+	//bi-directional many-to-one association to Promotion
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION"),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE")
+		})
+	private Promotion promotion;
+
+	//bi-directional many-to-one association to ReponseEvaluation
+	@OneToMany(mappedBy="etudiant")
+	private List<ReponseEvaluation> reponseEvaluations;
 
 	public Etudiant() {
 	}
@@ -206,6 +219,36 @@ public class Etudiant implements Serializable {
 
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+
+	public Promotion getPromotion() {
+		return this.promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
+	public List<ReponseEvaluation> getReponseEvaluations() {
+		return this.reponseEvaluations;
+	}
+
+	public void setReponseEvaluations(List<ReponseEvaluation> reponseEvaluations) {
+		this.reponseEvaluations = reponseEvaluations;
+	}
+
+	public ReponseEvaluation addReponseEvaluation(ReponseEvaluation reponseEvaluation) {
+		getReponseEvaluations().add(reponseEvaluation);
+		reponseEvaluation.setEtudiant(this);
+
+		return reponseEvaluation;
+	}
+
+	public ReponseEvaluation removeReponseEvaluation(ReponseEvaluation reponseEvaluation) {
+		getReponseEvaluations().remove(reponseEvaluation);
+		reponseEvaluation.setEtudiant(null);
+
+		return reponseEvaluation;
 	}
 
 }

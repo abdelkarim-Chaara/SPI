@@ -1,87 +1,107 @@
 package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
 /**
- * The persistent class for the cg_ref_codes database table.
+ * The persistent class for the CG_REF_CODES database table.
  * 
  */
 @Entity
-@Table(name="cg_ref_codes")
+@Table(name="CG_REF_CODES")
 @NamedQuery(name="CgRefCode.findAll", query="SELECT c FROM CgRefCode c")
 public class CgRefCode implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="id_cgrc")
 	private int idCgrc;
+	   private String rvDomain;
+	   private String rvLowValue;
+	   private String rvHighValue;
+	   private String rvAbbreviation;
+	   private String rvMeaning;
 
-	@Column(name="rv_abbreviation")
-	private String rvAbbreviation;
+	   @Id
+	   @Column(name = "ID_CGRC")
+	   public int getIdCgrc() {
+	       return idCgrc;
+	   }
 
-	@Column(name="rv_domain")
-	private String rvDomain;
+	   public void setIdCgrc(int idCgrc) {
+	       this.idCgrc = idCgrc;
+	   }
 
-	@Column(name="rv_high_value")
-	private String rvHighValue;
+	   @Basic
+	   @Column(name = "RV_DOMAIN")
+	   public String getRvDomain() {
+	       return rvDomain;
+	   }
 
-	@Column(name="rv_low_value")
-	private String rvLowValue;
+	   public void setRvDomain(String rvDomain) {
+	       this.rvDomain = rvDomain;
+	   }
 
-	@Column(name="rv_meaning")
-	private String rvMeaning;
+	   @Basic
+	   @Column(name = "RV_LOW_VALUE")
+	   public String getRvLowValue() {
+	       return rvLowValue;
+	   }
 
+	   public void setRvLowValue(String rvLowValue) {
+	       this.rvLowValue = rvLowValue;
+	   }
+
+	   @Basic
+	   @Column(name = "RV_HIGH_VALUE")
+	   public String getRvHighValue() {
+	       return rvHighValue;
+	   }
+
+	   public void setRvHighValue(String rvHighValue) {
+	       this.rvHighValue = rvHighValue;
+	   }
+
+	   @Basic
+	   @Column(name = "RV_ABBREVIATION")
+	   public String getRvAbbreviation() {
+	       return rvAbbreviation;
+	   }
+
+	   public void setRvAbbreviation(String rvAbbreviation) {
+	       this.rvAbbreviation = rvAbbreviation;
+	   }
+
+	   @Basic
+	   @Column(name = "RV_MEANING")
+	   public String getRvMeaning() {
+	       return rvMeaning;
+	   }
+
+	   public void setRvMeaning(String rvMeaning) {
+	       this.rvMeaning = rvMeaning;
+	   }
+
+	   @Override
+	   public boolean equals(Object o) {
+	       if (this == o) return true;
+	       if (o == null || getClass() != o.getClass()) return false;
+	       CgRefCode that = (CgRefCode) o;
+	       return idCgrc == that.idCgrc &&
+	               Objects.equals(rvDomain, that.rvDomain) &&
+	               Objects.equals(rvLowValue, that.rvLowValue) &&
+	               Objects.equals(rvHighValue, that.rvHighValue) &&
+	               Objects.equals(rvAbbreviation, that.rvAbbreviation) &&
+	               Objects.equals(rvMeaning, that.rvMeaning);
+	   }
+
+	   @Override
+	   public int hashCode() {
+	       return Objects.hash(idCgrc, rvDomain, rvLowValue, rvHighValue, rvAbbreviation, rvMeaning);
+	   }
 	public CgRefCode() {
 	}
-
-	public int getIdCgrc() {
-		return this.idCgrc;
-	}
-
-	public void setIdCgrc(int idCgrc) {
-		this.idCgrc = idCgrc;
-	}
-
-	public String getRvAbbreviation() {
-		return this.rvAbbreviation;
-	}
-
-	public void setRvAbbreviation(String rvAbbreviation) {
-		this.rvAbbreviation = rvAbbreviation;
-	}
-
-	public String getRvDomain() {
-		return this.rvDomain;
-	}
-
-	public void setRvDomain(String rvDomain) {
-		this.rvDomain = rvDomain;
-	}
-
-	public String getRvHighValue() {
-		return this.rvHighValue;
-	}
-
-	public void setRvHighValue(String rvHighValue) {
-		this.rvHighValue = rvHighValue;
-	}
-
-	public String getRvLowValue() {
-		return this.rvLowValue;
-	}
-
-	public void setRvLowValue(String rvLowValue) {
-		this.rvLowValue = rvLowValue;
-	}
-
-	public String getRvMeaning() {
-		return this.rvMeaning;
-	}
-
-	public void setRvMeaning(String rvMeaning) {
-		this.rvMeaning = rvMeaning;
-	}
+	
+	
 
 }

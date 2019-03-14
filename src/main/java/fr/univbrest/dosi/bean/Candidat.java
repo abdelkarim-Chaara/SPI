@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the candidat database table.
+ * The persistent class for the CANDIDAT database table.
  * 
  */
 @Entity
@@ -15,31 +15,31 @@ public class Candidat implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="no_candidat")
+	@Column(name="NO_CANDIDAT")
 	private String noCandidat;
 
 	private String adresse;
 
-	@Column(name="code_postal")
+	@Column(name="CODE_POSTAL")
 	private String codePostal;
 
-	@Column(name="confirmation_candidat")
+	@Column(name="CONFIRMATION_CANDIDAT")
 	private String confirmationCandidat;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_naissance")
+	@Column(name="DATE_NAISSANCE")
 	private Date dateNaissance;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_reponse_candidat")
+	@Column(name="DATE_REPONSE_CANDIDAT")
 	private Date dateReponseCandidat;
 
 	private String email;
 
-	@Column(name="lieu_naissance")
+	@Column(name="LIEU_NAISSANCE")
 	private String lieuNaissance;
 
-	@Column(name="liste_selection")
+	@Column(name="LISTE_SELECTION")
 	private String listeSelection;
 
 	private String mobile;
@@ -48,22 +48,30 @@ public class Candidat implements Serializable {
 
 	private String nom;
 
-	@Column(name="pays_origine")
+	@Column(name="PAYS_ORIGINE")
 	private String paysOrigine;
 
 	private String prenom;
 
-	@Column(name="selection_no_ordre")
+	@Column(name="SELECTION_NO_ORDRE")
 	private int selectionNoOrdre;
 
 	private String sexe;
 
 	private String telephone;
 
-	@Column(name="universite_origine")
+	@Column(name="UNIVERSITE_ORIGINE")
 	private String universiteOrigine;
 
 	private String ville;
+
+	//bi-directional many-to-one association to Promotion
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION"),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE")
+		})
+	private Promotion promotion;
 
 	public Candidat() {
 	}
@@ -218,6 +226,14 @@ public class Candidat implements Serializable {
 
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+
+	public Promotion getPromotion() {
+		return this.promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
 	}
 
 }

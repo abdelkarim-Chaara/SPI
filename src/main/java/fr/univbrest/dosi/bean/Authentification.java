@@ -1,11 +1,13 @@
 package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
 /**
- * The persistent class for the authentification database table.
+ * The persistent class for the AUTHENTIFICATION database table.
  * 
  */
 @Entity
@@ -13,84 +15,105 @@ import javax.persistence.*;
 public class Authentification implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="id_connection")
-	private int idConnection;
-
-	@Column(name="login_connection")
-	private String loginConnection;
-
-	@Column(name="mot_passe")
-	private String motPasse;
-
-	@Column(name="no_enseignant")
-	private int noEnseignant;
-
-	@Column(name="no_etudiant")
-	private String noEtudiant;
-
-	@Column(name="pseudo_connection")
-	private String pseudoConnection;
-
-	private String role;
-
 	public Authentification() {
 	}
+	
+	private int idConnection;
+    private String role;
+    private String loginConnection;
+    private String pseudoConnection;
+    private String motPasse;
+    private Integer noEnseignant;
+    private String noEtudiant;
 
-	public int getIdConnection() {
-		return this.idConnection;
-	}
+    @Id
+    @Column(name = "ID_CONNECTION")
+    public int getIdConnection() {
+        return idConnection;
+    }
 
-	public void setIdConnection(int idConnection) {
-		this.idConnection = idConnection;
-	}
+    public void setIdConnection(int idConnection) {
+        this.idConnection = idConnection;
+    }
 
-	public String getLoginConnection() {
-		return this.loginConnection;
-	}
+    @Basic
+    @Column(name = "ROLE")
+    public String getRole() {
+        return role;
+    }
 
-	public void setLoginConnection(String loginConnection) {
-		this.loginConnection = loginConnection;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public String getMotPasse() {
-		return this.motPasse;
-	}
+    @Basic
+    @Column(name = "LOGIN_CONNECTION")
+    public String getLoginConnection() {
+        return loginConnection;
+    }
 
-	public void setMotPasse(String motPasse) {
-		this.motPasse = motPasse;
-	}
+    public void setLoginConnection(String loginConnection) {
+        this.loginConnection = loginConnection;
+    }
 
-	public int getNoEnseignant() {
-		return this.noEnseignant;
-	}
+    @Basic
+    @Column(name = "PSEUDO_CONNECTION")
+    public String getPseudoConnection() {
+        return pseudoConnection;
+    }
 
-	public void setNoEnseignant(int noEnseignant) {
-		this.noEnseignant = noEnseignant;
-	}
+    public void setPseudoConnection(String pseudoConnection) {
+        this.pseudoConnection = pseudoConnection;
+    }
 
-	public String getNoEtudiant() {
-		return this.noEtudiant;
-	}
+    @Basic
+    @Column(name = "MOT_PASSE")
+    public String getMotPasse() {
+        return motPasse;
+    }
 
-	public void setNoEtudiant(String noEtudiant) {
-		this.noEtudiant = noEtudiant;
-	}
+    public void setMotPasse(String motPasse) {
+        this.motPasse = motPasse;
+    }
 
-	public String getPseudoConnection() {
-		return this.pseudoConnection;
-	}
+    @Basic
+    @Column(name = "NO_ENSEIGNANT")
+    public Integer getNoEnseignant() {
+        return noEnseignant;
+    }
 
-	public void setPseudoConnection(String pseudoConnection) {
-		this.pseudoConnection = pseudoConnection;
-	}
+    public void setNoEnseignant(Integer noEnseignant) {
+        this.noEnseignant = noEnseignant;
+    }
 
-	public String getRole() {
-		return this.role;
-	}
+    @Basic
+    @Column(name = "NO_ETUDIANT")
+    public String getNoEtudiant() {
+        return noEtudiant;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setNoEtudiant(String noEtudiant) {
+        this.noEtudiant = noEtudiant;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Authentification that = (Authentification) o;
+        return idConnection == that.idConnection &&
+                Objects.equals(role, that.role) &&
+                Objects.equals(loginConnection, that.loginConnection) &&
+                Objects.equals(pseudoConnection, that.pseudoConnection) &&
+                Objects.equals(motPasse, that.motPasse) &&
+                Objects.equals(noEnseignant, that.noEnseignant) &&
+                Objects.equals(noEtudiant, that.noEtudiant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idConnection, role, loginConnection, pseudoConnection, motPasse, noEnseignant, noEtudiant);
+    }
 }
+
+

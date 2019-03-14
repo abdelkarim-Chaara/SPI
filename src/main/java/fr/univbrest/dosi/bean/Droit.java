@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the droit database table.
+ * The persistent class for the DROIT database table.
  * 
  */
 @Entity
@@ -19,6 +19,16 @@ public class Droit implements Serializable {
 	private String consultation;
 
 	private String duplication;
+
+	//bi-directional many-to-one association to Enseignant
+	@ManyToOne
+	@JoinColumn(name="NO_ENSEIGNANT")
+	private Enseignant enseignant;
+
+	//bi-directional many-to-one association to Evaluation
+	@ManyToOne
+	@JoinColumn(name="ID_EVALUATION")
+	private Evaluation evaluation;
 
 	public Droit() {
 	}
@@ -45,6 +55,22 @@ public class Droit implements Serializable {
 
 	public void setDuplication(String duplication) {
 		this.duplication = duplication;
+	}
+
+	public Enseignant getEnseignant() {
+		return this.enseignant;
+	}
+
+	public void setEnseignant(Enseignant enseignant) {
+		this.enseignant = enseignant;
+	}
+
+	public Evaluation getEvaluation() {
+		return this.evaluation;
+	}
+
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
 	}
 
 }

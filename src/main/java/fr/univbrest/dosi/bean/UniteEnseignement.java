@@ -2,14 +2,15 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the unite_enseignement database table.
+ * The persistent class for the UNITE_ENSEIGNEMENT database table.
  * 
  */
 @Entity
-@Table(name="unite_enseignement")
+@Table(name="UNITE_ENSEIGNEMENT")
 @NamedQuery(name="UniteEnseignement.findAll", query="SELECT u FROM UniteEnseignement u")
 public class UniteEnseignement implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,16 +22,34 @@ public class UniteEnseignement implements Serializable {
 
 	private String designation;
 
-	@Column(name="nbh_cm")
+	@Column(name="NBH_CM")
 	private int nbhCm;
 
-	@Column(name="nbh_td")
+	@Column(name="NBH_TD")
 	private int nbhTd;
 
-	@Column(name="nbh_tp")
+	@Column(name="NBH_TP")
 	private int nbhTp;
 
 	private String semestre;
+
+	//bi-directional many-to-one association to ElementConstitutif
+	@OneToMany(mappedBy="uniteEnseignement")
+	private List<ElementConstitutif> elementConstitutifs;
+
+	//bi-directional many-to-one association to Evaluation
+	@OneToMany(mappedBy="uniteEnseignement")
+	private List<Evaluation> evaluations;
+
+	//bi-directional many-to-one association to Enseignant
+	@ManyToOne
+	@JoinColumn(name="NO_ENSEIGNANT")
+	private Enseignant enseignant;
+
+	//bi-directional many-to-one association to Formation
+	@ManyToOne
+	@JoinColumn(name="CODE_FORMATION")
+	private Formation formation;
 
 	public UniteEnseignement() {
 	}
@@ -89,6 +108,66 @@ public class UniteEnseignement implements Serializable {
 
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
+	}
+
+	public List<ElementConstitutif> getElementConstitutifs() {
+		return this.elementConstitutifs;
+	}
+
+	public void setElementConstitutifs(List<ElementConstitutif> elementConstitutifs) {
+		this.elementConstitutifs = elementConstitutifs;
+	}
+
+	public ElementConstitutif addElementConstitutif(ElementConstitutif elementConstitutif) {
+		getElementConstitutifs().add(elementConstitutif);
+		elementConstitutif.setUniteEnseignement(this);
+
+		return elementConstitutif;
+	}
+
+	public ElementConstitutif removeElementConstitutif(ElementConstitutif elementConstitutif) {
+		getElementConstitutifs().remove(elementConstitutif);
+		elementConstitutif.setUniteEnseignement(null);
+
+		return elementConstitutif;
+	}
+
+	public List<Evaluation> getEvaluations() {
+		return this.evaluations;
+	}
+
+	public void setEvaluations(List<Evaluation> evaluations) {
+		this.evaluations = evaluations;
+	}
+
+	public Evaluation addEvaluation(Evaluation evaluation) {
+		getEvaluations().add(evaluation);
+		evaluation.setUniteEnseignement(this);
+
+		return evaluation;
+	}
+
+	public Evaluation removeEvaluation(Evaluation evaluation) {
+		getEvaluations().remove(evaluation);
+		evaluation.setUniteEnseignement(null);
+
+		return evaluation;
+	}
+
+	public Enseignant getEnseignant() {
+		return this.enseignant;
+	}
+
+	public void setEnseignant(Enseignant enseignant) {
+		this.enseignant = enseignant;
+	}
+
+	public Formation getFormation() {
+		return this.formation;
+	}
+
+	public void setFormation(Formation formation) {
+		this.formation = formation;
 	}
 
 }
