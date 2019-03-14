@@ -2,6 +2,9 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -16,9 +19,10 @@ public class Enseignant implements Serializable {
 
 	@Id
 	@Column(name="NO_ENSEIGNANT")
-	private int noEnseignant;
+	private long noEnseignant;
 
 	private String adresse;
+
 
 	@Column(name="CODE_POSTAL")
 	private String codePostal;
@@ -41,46 +45,34 @@ public class Enseignant implements Serializable {
 
 	private String telephone;
 
+	@Column(name="TYPE")
 	private String type;
 
 	private String ville;
 
-	//bi-directional many-to-one association to Droit
-	@OneToMany(mappedBy="enseignant")
-	private List<Droit> droits;
-
 	//bi-directional many-to-one association to ElementConstitutif
 	@OneToMany(mappedBy="enseignant")
+	@JsonIgnore
 	private List<ElementConstitutif> elementConstitutifs;
-
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="enseignant")
-	private List<Evaluation> evaluations;
 
 	//bi-directional many-to-one association to Promotion
 	@OneToMany(mappedBy="enseignant")
+	@JsonIgnore
 	private List<Promotion> promotions;
-
-	//bi-directional many-to-one association to Question
-	@OneToMany(mappedBy="enseignant")
-	private List<Question> questions;
-
-	//bi-directional many-to-one association to Rubrique
-	@OneToMany(mappedBy="enseignant")
-	private List<Rubrique> rubriques;
 
 	//bi-directional many-to-one association to UniteEnseignement
 	@OneToMany(mappedBy="enseignant")
+	@JsonIgnore
 	private List<UniteEnseignement> uniteEnseignements;
 
 	public Enseignant() {
 	}
 
-	public int getNoEnseignant() {
+	public long getNoEnseignant() {
 		return this.noEnseignant;
 	}
 
-	public void setNoEnseignant(int noEnseignant) {
+	public void setNoEnseignant(long noEnseignant) {
 		this.noEnseignant = noEnseignant;
 	}
 
@@ -180,28 +172,6 @@ public class Enseignant implements Serializable {
 		this.ville = ville;
 	}
 
-	public List<Droit> getDroits() {
-		return this.droits;
-	}
-
-	public void setDroits(List<Droit> droits) {
-		this.droits = droits;
-	}
-
-	public Droit addDroit(Droit droit) {
-		getDroits().add(droit);
-		droit.setEnseignant(this);
-
-		return droit;
-	}
-
-	public Droit removeDroit(Droit droit) {
-		getDroits().remove(droit);
-		droit.setEnseignant(null);
-
-		return droit;
-	}
-
 	public List<ElementConstitutif> getElementConstitutifs() {
 		return this.elementConstitutifs;
 	}
@@ -222,28 +192,6 @@ public class Enseignant implements Serializable {
 		elementConstitutif.setEnseignant(null);
 
 		return elementConstitutif;
-	}
-
-	public List<Evaluation> getEvaluations() {
-		return this.evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public Evaluation addEvaluation(Evaluation evaluation) {
-		getEvaluations().add(evaluation);
-		evaluation.setEnseignant(this);
-
-		return evaluation;
-	}
-
-	public Evaluation removeEvaluation(Evaluation evaluation) {
-		getEvaluations().remove(evaluation);
-		evaluation.setEnseignant(null);
-
-		return evaluation;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -268,50 +216,6 @@ public class Enseignant implements Serializable {
 		return promotion;
 	}
 
-	public List<Question> getQuestions() {
-		return this.questions;
-	}
-
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
-	}
-
-	public Question addQuestion(Question question) {
-		getQuestions().add(question);
-		question.setEnseignant(this);
-
-		return question;
-	}
-
-	public Question removeQuestion(Question question) {
-		getQuestions().remove(question);
-		question.setEnseignant(null);
-
-		return question;
-	}
-
-	public List<Rubrique> getRubriques() {
-		return this.rubriques;
-	}
-
-	public void setRubriques(List<Rubrique> rubriques) {
-		this.rubriques = rubriques;
-	}
-
-	public Rubrique addRubrique(Rubrique rubrique) {
-		getRubriques().add(rubrique);
-		rubrique.setEnseignant(this);
-
-		return rubrique;
-	}
-
-	public Rubrique removeRubrique(Rubrique rubrique) {
-		getRubriques().remove(rubrique);
-		rubrique.setEnseignant(null);
-
-		return rubrique;
-	}
-
 	public List<UniteEnseignement> getUniteEnseignements() {
 		return this.uniteEnseignements;
 	}
@@ -334,4 +238,17 @@ public class Enseignant implements Serializable {
 		return uniteEnseignement;
 	}
 
+	public Enseignant(long noEnseignant, String adresse, String emailUbo, String nom) {
+		super();
+		this.noEnseignant = noEnseignant;
+		this.adresse = adresse;
+		this.emailUbo = emailUbo;
+		this.nom = nom;
+	}
+
+	
+
+
+
+	
 }

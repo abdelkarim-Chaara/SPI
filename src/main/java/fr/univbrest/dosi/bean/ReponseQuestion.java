@@ -21,7 +21,7 @@ public class ReponseQuestion implements Serializable {
 
 	//bi-directional many-to-one association to QuestionEvaluation
 	@ManyToOne
-	@JoinColumn(name="ID_QUESTION_EVALUATION")
+	@JoinColumn(name="ID_QUESTION_EVALUATION", nullable=false, insertable=false, updatable=false)
 	private QuestionEvaluation questionEvaluation;
 
 	public ReponseQuestion() {

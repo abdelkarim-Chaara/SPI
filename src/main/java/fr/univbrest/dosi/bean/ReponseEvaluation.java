@@ -15,13 +15,17 @@ public class ReponseEvaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_REPONSE_EVALUATION")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_REPONSE_EVALUATION", unique=true, nullable=false)
 	private int idReponseEvaluation;
 
+	@Column(length=512)
 	private String commentaire;
 
+	@Column(length=32)
 	private String nom;
 
+	@Column(length=32)
 	private String prenom;
 
 	//bi-directional many-to-one association to Etudiant
@@ -31,7 +35,7 @@ public class ReponseEvaluation implements Serializable {
 
 	//bi-directional many-to-one association to Evaluation
 	@ManyToOne
-	@JoinColumn(name="ID_EVALUATION")
+	@JoinColumn(name="ID_EVALUATION", nullable=false)
 	private Evaluation evaluation;
 
 	public ReponseEvaluation() {

@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="DROIT")
 @NamedQuery(name="Droit.findAll", query="SELECT d FROM Droit d")
 public class Droit implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,18 +17,20 @@ public class Droit implements Serializable {
 	@EmbeddedId
 	private DroitPK id;
 
+	@Column(nullable=false, length=1)
 	private String consultation;
 
+	@Column(nullable=false, length=1)
 	private String duplication;
 
 	//bi-directional many-to-one association to Enseignant
 	@ManyToOne
-	@JoinColumn(name="NO_ENSEIGNANT")
+	@JoinColumn(name="NO_ENSEIGNANT", nullable=false, insertable=false, updatable=false)
 	private Enseignant enseignant;
 
 	//bi-directional many-to-one association to Evaluation
 	@ManyToOne
-	@JoinColumn(name="ID_EVALUATION")
+	@JoinColumn(name="ID_EVALUATION", nullable=false, insertable=false, updatable=false)
 	private Evaluation evaluation;
 
 	public Droit() {

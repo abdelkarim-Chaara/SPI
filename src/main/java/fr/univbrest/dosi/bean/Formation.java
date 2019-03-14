@@ -2,8 +2,8 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -33,21 +33,27 @@ public class Formation implements Serializable {
 	private Date finAccreditation;
 
 	@Column(name="N0_ANNEE")
-	private int n0Annee;
+	private BigDecimal n0Annee;
 
 	@Column(name="NOM_FORMATION")
 	private String nomFormation;
 
-	//bi-directional many-to-one association to Promotion
-	@OneToMany(mappedBy="formation")
-	private List<Promotion> promotions;
-
-	//bi-directional many-to-one association to UniteEnseignement
-	@OneToMany(mappedBy="formation")
-	private List<UniteEnseignement> uniteEnseignements;
-
 	public Formation() {
 	}
+	
+	public Formation(String codeFormation, String diplome, String doubleDiplome,
+			 BigDecimal n0Annee, String nomFormation) {
+		super();
+		this.codeFormation = codeFormation;
+		this.debutAccreditation = debutAccreditation;
+		this.diplome = diplome;
+		this.doubleDiplome = doubleDiplome;
+		this.finAccreditation = finAccreditation;
+		this.n0Annee = n0Annee;
+		this.nomFormation = nomFormation;
+	}
+
+
 
 	public String getCodeFormation() {
 		return this.codeFormation;
@@ -89,11 +95,11 @@ public class Formation implements Serializable {
 		this.finAccreditation = finAccreditation;
 	}
 
-	public int getN0Annee() {
+	public BigDecimal getN0Annee() {
 		return this.n0Annee;
 	}
 
-	public void setN0Annee(int n0Annee) {
+	public void setN0Annee(BigDecimal n0Annee) {
 		this.n0Annee = n0Annee;
 	}
 
@@ -103,50 +109,6 @@ public class Formation implements Serializable {
 
 	public void setNomFormation(String nomFormation) {
 		this.nomFormation = nomFormation;
-	}
-
-	public List<Promotion> getPromotions() {
-		return this.promotions;
-	}
-
-	public void setPromotions(List<Promotion> promotions) {
-		this.promotions = promotions;
-	}
-
-	public Promotion addPromotion(Promotion promotion) {
-		getPromotions().add(promotion);
-		promotion.setFormation(this);
-
-		return promotion;
-	}
-
-	public Promotion removePromotion(Promotion promotion) {
-		getPromotions().remove(promotion);
-		promotion.setFormation(null);
-
-		return promotion;
-	}
-
-	public List<UniteEnseignement> getUniteEnseignements() {
-		return this.uniteEnseignements;
-	}
-
-	public void setUniteEnseignements(List<UniteEnseignement> uniteEnseignements) {
-		this.uniteEnseignements = uniteEnseignements;
-	}
-
-	public UniteEnseignement addUniteEnseignement(UniteEnseignement uniteEnseignement) {
-		getUniteEnseignements().add(uniteEnseignement);
-		uniteEnseignement.setFormation(this);
-
-		return uniteEnseignement;
-	}
-
-	public UniteEnseignement removeUniteEnseignement(UniteEnseignement uniteEnseignement) {
-		getUniteEnseignements().remove(uniteEnseignement);
-		uniteEnseignement.setFormation(null);
-
-		return uniteEnseignement;
 	}
 
 }

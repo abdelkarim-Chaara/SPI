@@ -12,10 +12,10 @@ public class RubriqueQuestionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="ID_RUBRIQUE", insertable=false, updatable=false)
+	@Column(name="ID_RUBRIQUE", insertable=false, updatable=false, unique=true, nullable=false)
 	private int idRubrique;
 
-	@Column(name="ID_QUESTION", insertable=false, updatable=false)
+	@Column(name="ID_QUESTION", insertable=false, updatable=false, unique=true, nullable=false)
 	private int idQuestion;
 
 	public RubriqueQuestionPK() {

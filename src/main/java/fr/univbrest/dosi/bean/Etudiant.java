@@ -2,8 +2,8 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -34,10 +34,10 @@ public class Etudiant implements Serializable {
 	private String emailUbo;
 
 	@Column(name="GROUPE_ANGLAIS")
-	private int groupeAnglais;
+	private BigDecimal groupeAnglais;
 
 	@Column(name="GROUPE_TP")
-	private int groupeTp;
+	private BigDecimal groupeTp;
 
 	@Column(name="LIEU_NAISSANCE")
 	private String lieuNaissance;
@@ -65,14 +65,10 @@ public class Etudiant implements Serializable {
 	//bi-directional many-to-one association to Promotion
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION"),
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE")
+		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="ANNEE_UNIVERSITAIRE"),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION")
 		})
 	private Promotion promotion;
-
-	//bi-directional many-to-one association to ReponseEvaluation
-	@OneToMany(mappedBy="etudiant")
-	private List<ReponseEvaluation> reponseEvaluations;
 
 	public Etudiant() {
 	}
@@ -125,19 +121,19 @@ public class Etudiant implements Serializable {
 		this.emailUbo = emailUbo;
 	}
 
-	public int getGroupeAnglais() {
+	public BigDecimal getGroupeAnglais() {
 		return this.groupeAnglais;
 	}
 
-	public void setGroupeAnglais(int groupeAnglais) {
+	public void setGroupeAnglais(BigDecimal groupeAnglais) {
 		this.groupeAnglais = groupeAnglais;
 	}
 
-	public int getGroupeTp() {
+	public BigDecimal getGroupeTp() {
 		return this.groupeTp;
 	}
 
-	public void setGroupeTp(int groupeTp) {
+	public void setGroupeTp(BigDecimal groupeTp) {
 		this.groupeTp = groupeTp;
 	}
 
@@ -227,28 +223,6 @@ public class Etudiant implements Serializable {
 
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
-	}
-
-	public List<ReponseEvaluation> getReponseEvaluations() {
-		return this.reponseEvaluations;
-	}
-
-	public void setReponseEvaluations(List<ReponseEvaluation> reponseEvaluations) {
-		this.reponseEvaluations = reponseEvaluations;
-	}
-
-	public ReponseEvaluation addReponseEvaluation(ReponseEvaluation reponseEvaluation) {
-		getReponseEvaluations().add(reponseEvaluation);
-		reponseEvaluation.setEtudiant(this);
-
-		return reponseEvaluation;
-	}
-
-	public ReponseEvaluation removeReponseEvaluation(ReponseEvaluation reponseEvaluation) {
-		getReponseEvaluations().remove(reponseEvaluation);
-		reponseEvaluation.setEtudiant(null);
-
-		return reponseEvaluation;
 	}
 
 }

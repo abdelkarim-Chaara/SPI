@@ -11,29 +11,34 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="EVALUATION")
 @NamedQuery(name="Evaluation.findAll", query="SELECT e FROM Evaluation e")
 public class Evaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_EVALUATION")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_EVALUATION", unique=true, nullable=false)
 	private int idEvaluation;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="DEBUT_REPONSE")
+	@Column(name="DEBUT_REPONSE", nullable=false)
 	private Date debutReponse;
 
+	@Column(nullable=false, length=16)
 	private String designation;
 
+	@Column(nullable=false, length=3)
 	private String etat;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="FIN_REPONSE")
+	@Column(name="FIN_REPONSE", nullable=false)
 	private Date finReponse;
 
-	@Column(name="NO_EVALUATION")
+	@Column(name="NO_EVALUATION", nullable=false)
 	private int noEvaluation;
 
+	@Column(length=64)
 	private String periode;
 
 	//bi-directional many-to-one association to Droit
@@ -43,30 +48,30 @@ public class Evaluation implements Serializable {
 	//bi-directional many-to-one association to ElementConstitutif
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CODE_EC", referencedColumnName="CODE_EC"),
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION"),
-		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE")
+		@JoinColumn(name="CODE_EC", referencedColumnName="CODE_EC", insertable=false, updatable=false),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION", insertable=false, updatable=false),
+		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE", insertable=false, updatable=false)
 		})
 	private ElementConstitutif elementConstitutif;
 
 	//bi-directional many-to-one association to Enseignant
 	@ManyToOne
-	@JoinColumn(name="NO_ENSEIGNANT")
+	@JoinColumn(name="NO_ENSEIGNANT", nullable=false)
 	private Enseignant enseignant;
 
 	//bi-directional many-to-one association to Promotion
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION"),
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE")
+		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION", insertable=false, updatable=false),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE", insertable=false, updatable=false)
 		})
 	private Promotion promotion;
 
 	//bi-directional many-to-one association to UniteEnseignement
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION"),
-		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE")
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION", insertable=false, updatable=false),
+		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE", insertable=false, updatable=false)
 		})
 	private UniteEnseignement uniteEnseignement;
 

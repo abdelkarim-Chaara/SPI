@@ -12,10 +12,10 @@ public class DroitPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="ID_EVALUATION", insertable=false, updatable=false)
+	@Column(name="ID_EVALUATION", insertable=false, updatable=false, unique=true, nullable=false)
 	private int idEvaluation;
 
-	@Column(name="NO_ENSEIGNANT", insertable=false, updatable=false)
+	@Column(name="NO_ENSEIGNANT", insertable=false, updatable=false, unique=true, nullable=false)
 	private int noEnseignant;
 
 	public DroitPK() {

@@ -2,7 +2,7 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.math.BigDecimal;
 
 
 /**
@@ -23,13 +23,13 @@ public class ElementConstitutif implements Serializable {
 	private String designation;
 
 	@Column(name="NBH_CM")
-	private byte nbhCm;
+	private BigDecimal nbhCm;
 
 	@Column(name="NBH_TD")
-	private byte nbhTd;
+	private BigDecimal nbhTd;
 
 	@Column(name="NBH_TP")
-	private byte nbhTp;
+	private BigDecimal nbhTp;
 
 	//bi-directional many-to-one association to Enseignant
 	@ManyToOne
@@ -39,14 +39,10 @@ public class ElementConstitutif implements Serializable {
 	//bi-directional many-to-one association to UniteEnseignement
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION"),
-		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE")
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION", insertable=false, updatable=false),
+		@JoinColumn(name="CODE_UE", referencedColumnName="CODE_UE", insertable=false, updatable=false)
 		})
 	private UniteEnseignement uniteEnseignement;
-
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="elementConstitutif")
-	private List<Evaluation> evaluations;
 
 	public ElementConstitutif() {
 	}
@@ -75,27 +71,27 @@ public class ElementConstitutif implements Serializable {
 		this.designation = designation;
 	}
 
-	public byte getNbhCm() {
+	public BigDecimal getNbhCm() {
 		return this.nbhCm;
 	}
 
-	public void setNbhCm(byte nbhCm) {
+	public void setNbhCm(BigDecimal nbhCm) {
 		this.nbhCm = nbhCm;
 	}
 
-	public byte getNbhTd() {
+	public BigDecimal getNbhTd() {
 		return this.nbhTd;
 	}
 
-	public void setNbhTd(byte nbhTd) {
+	public void setNbhTd(BigDecimal nbhTd) {
 		this.nbhTd = nbhTd;
 	}
 
-	public byte getNbhTp() {
+	public BigDecimal getNbhTp() {
 		return this.nbhTp;
 	}
 
-	public void setNbhTp(byte nbhTp) {
+	public void setNbhTp(BigDecimal nbhTp) {
 		this.nbhTp = nbhTp;
 	}
 
@@ -113,28 +109,6 @@ public class ElementConstitutif implements Serializable {
 
 	public void setUniteEnseignement(UniteEnseignement uniteEnseignement) {
 		this.uniteEnseignement = uniteEnseignement;
-	}
-
-	public List<Evaluation> getEvaluations() {
-		return this.evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public Evaluation addEvaluation(Evaluation evaluation) {
-		getEvaluations().add(evaluation);
-		evaluation.setElementConstitutif(this);
-
-		return evaluation;
-	}
-
-	public Evaluation removeEvaluation(Evaluation evaluation) {
-		getEvaluations().remove(evaluation);
-		evaluation.setElementConstitutif(null);
-
-		return evaluation;
 	}
 
 }

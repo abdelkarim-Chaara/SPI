@@ -10,16 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="QUESTION")
 @NamedQuery(name="Question.findAll", query="SELECT q FROM Question q")
 public class Question implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_QUESTION")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_QUESTION", unique=true, nullable=false)
 	private int idQuestion;
 
+	@Column(nullable=false, length=64)
 	private String intitule;
 
+	@Column(nullable=false, length=10)
 	private String type;
 
 	//bi-directional many-to-one association to Enseignant
@@ -29,7 +33,7 @@ public class Question implements Serializable {
 
 	//bi-directional many-to-one association to Qualificatif
 	@ManyToOne
-	@JoinColumn(name="ID_QUALIFICATIF")
+	@JoinColumn(name="ID_QUALIFICATIF", nullable=false)
 	private Qualificatif qualificatif;
 
 	//bi-directional many-to-one association to QuestionEvaluation

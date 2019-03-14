@@ -16,11 +16,14 @@ public class RubriqueEvaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_RUBRIQUE_EVALUATION")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_RUBRIQUE_EVALUATION", unique=true, nullable=false)
 	private int idRubriqueEvaluation;
 
+	@Column(length=64)
 	private String designation;
 
+	@Column(nullable=false)
 	private int ordre;
 
 	//bi-directional many-to-one association to QuestionEvaluation
@@ -29,7 +32,7 @@ public class RubriqueEvaluation implements Serializable {
 
 	//bi-directional many-to-one association to Evaluation
 	@ManyToOne
-	@JoinColumn(name="ID_EVALUATION")
+	@JoinColumn(name="ID_EVALUATION", nullable=false)
 	private Evaluation evaluation;
 
 	//bi-directional many-to-one association to Rubrique

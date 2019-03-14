@@ -12,10 +12,10 @@ public class ReponseQuestionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="ID_REPONSE_EVALUATION")
+	@Column(name="ID_REPONSE_EVALUATION", unique=true, nullable=false)
 	private int idReponseEvaluation;
 
-	@Column(name="ID_QUESTION_EVALUATION", insertable=false, updatable=false)
+	@Column(name="ID_QUESTION_EVALUATION", insertable=false, updatable=false, unique=true, nullable=false)
 	private int idQuestionEvaluation;
 
 	public ReponseQuestionPK() {

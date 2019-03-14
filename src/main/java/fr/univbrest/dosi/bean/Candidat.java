@@ -2,6 +2,11 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -19,6 +24,7 @@ public class Candidat implements Serializable {
 	private String noCandidat;
 
 	private String adresse;
+
 
 	@Column(name="CODE_POSTAL")
 	private String codePostal;
@@ -54,7 +60,7 @@ public class Candidat implements Serializable {
 	private String prenom;
 
 	@Column(name="SELECTION_NO_ORDRE")
-	private int selectionNoOrdre;
+	private BigDecimal selectionNoOrdre;
 
 	private String sexe;
 
@@ -68,9 +74,10 @@ public class Candidat implements Serializable {
 	//bi-directional many-to-one association to Promotion
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="CODE_FORMATION"),
-		@JoinColumn(name="CODE_FORMATION", referencedColumnName="ANNEE_UNIVERSITAIRE")
+		@JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="ANNEE_UNIVERSITAIRE"),
+		@JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION")
 		})
+	@JsonIgnore
 	private Promotion promotion;
 
 	public Candidat() {
@@ -188,11 +195,11 @@ public class Candidat implements Serializable {
 		this.prenom = prenom;
 	}
 
-	public int getSelectionNoOrdre() {
+	public BigDecimal getSelectionNoOrdre() {
 		return this.selectionNoOrdre;
 	}
 
-	public void setSelectionNoOrdre(int selectionNoOrdre) {
+	public void setSelectionNoOrdre(BigDecimal selectionNoOrdre) {
 		this.selectionNoOrdre = selectionNoOrdre;
 	}
 
@@ -235,5 +242,11 @@ public class Candidat implements Serializable {
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
 	}
-
+	public Candidat(String noCandidat, String codePostal, String nom, String universiteOrigine) {
+		super();
+		this.noCandidat = noCandidat;
+		this.codePostal = codePostal;
+		this.nom = nom;
+		this.universiteOrigine = universiteOrigine;
+	}
 }

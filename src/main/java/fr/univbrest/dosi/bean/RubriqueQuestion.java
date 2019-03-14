@@ -17,16 +17,17 @@ public class RubriqueQuestion implements Serializable {
 	@EmbeddedId
 	private RubriqueQuestionPK id;
 
+	@Column(nullable=false)
 	private int ordre;
 
 	//bi-directional many-to-one association to Question
 	@ManyToOne
-	@JoinColumn(name="ID_QUESTION")
+	@JoinColumn(name="ID_QUESTION", nullable=false, insertable=false, updatable=false)
 	private Question question;
 
 	//bi-directional many-to-one association to Rubrique
 	@ManyToOne
-	@JoinColumn(name="ID_RUBRIQUE")
+	@JoinColumn(name="ID_RUBRIQUE", nullable=false, insertable=false, updatable=false)
 	private Rubrique rubrique;
 
 	public RubriqueQuestion() {

@@ -10,18 +10,22 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="RUBRIQUE")
 @NamedQuery(name="Rubrique.findAll", query="SELECT r FROM Rubrique r")
 public class Rubrique implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_RUBRIQUE")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_RUBRIQUE", unique=true, nullable=false)
 	private int idRubrique;
 
+	@Column(nullable=false, length=32)
 	private String designation;
 
 	private int ordre;
 
+	@Column(nullable=false, length=10)
 	private String type;
 
 	//bi-directional many-to-one association to Enseignant

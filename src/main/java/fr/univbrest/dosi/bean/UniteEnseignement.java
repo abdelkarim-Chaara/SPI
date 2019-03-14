@@ -2,6 +2,7 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -23,13 +24,13 @@ public class UniteEnseignement implements Serializable {
 	private String designation;
 
 	@Column(name="NBH_CM")
-	private int nbhCm;
+	private BigDecimal nbhCm;
 
 	@Column(name="NBH_TD")
-	private int nbhTd;
+	private BigDecimal nbhTd;
 
 	@Column(name="NBH_TP")
-	private int nbhTp;
+	private BigDecimal nbhTp;
 
 	private String semestre;
 
@@ -37,19 +38,10 @@ public class UniteEnseignement implements Serializable {
 	@OneToMany(mappedBy="uniteEnseignement")
 	private List<ElementConstitutif> elementConstitutifs;
 
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="uniteEnseignement")
-	private List<Evaluation> evaluations;
-
 	//bi-directional many-to-one association to Enseignant
 	@ManyToOne
 	@JoinColumn(name="NO_ENSEIGNANT")
 	private Enseignant enseignant;
-
-	//bi-directional many-to-one association to Formation
-	@ManyToOne
-	@JoinColumn(name="CODE_FORMATION")
-	private Formation formation;
 
 	public UniteEnseignement() {
 	}
@@ -78,27 +70,27 @@ public class UniteEnseignement implements Serializable {
 		this.designation = designation;
 	}
 
-	public int getNbhCm() {
+	public BigDecimal getNbhCm() {
 		return this.nbhCm;
 	}
 
-	public void setNbhCm(int nbhCm) {
+	public void setNbhCm(BigDecimal nbhCm) {
 		this.nbhCm = nbhCm;
 	}
 
-	public int getNbhTd() {
+	public BigDecimal getNbhTd() {
 		return this.nbhTd;
 	}
 
-	public void setNbhTd(int nbhTd) {
+	public void setNbhTd(BigDecimal nbhTd) {
 		this.nbhTd = nbhTd;
 	}
 
-	public int getNbhTp() {
+	public BigDecimal getNbhTp() {
 		return this.nbhTp;
 	}
 
-	public void setNbhTp(int nbhTp) {
+	public void setNbhTp(BigDecimal nbhTp) {
 		this.nbhTp = nbhTp;
 	}
 
@@ -132,42 +124,12 @@ public class UniteEnseignement implements Serializable {
 		return elementConstitutif;
 	}
 
-	public List<Evaluation> getEvaluations() {
-		return this.evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public Evaluation addEvaluation(Evaluation evaluation) {
-		getEvaluations().add(evaluation);
-		evaluation.setUniteEnseignement(this);
-
-		return evaluation;
-	}
-
-	public Evaluation removeEvaluation(Evaluation evaluation) {
-		getEvaluations().remove(evaluation);
-		evaluation.setUniteEnseignement(null);
-
-		return evaluation;
-	}
-
 	public Enseignant getEnseignant() {
 		return this.enseignant;
 	}
 
 	public void setEnseignant(Enseignant enseignant) {
 		this.enseignant = enseignant;
-	}
-
-	public Formation getFormation() {
-		return this.formation;
-	}
-
-	public void setFormation(Formation formation) {
-		this.formation = formation;
 	}
 
 }

@@ -10,16 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="QUALIFICATIF")
 @NamedQuery(name="Qualificatif.findAll", query="SELECT q FROM Qualificatif q")
 public class Qualificatif implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="ID_QUALIFICATIF")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_QUALIFICATIF", unique=true, nullable=false)
 	private int idQualificatif;
 
+	@Column(nullable=false, length=16)
 	private String maximal;
 
+	@Column(nullable=false, length=16)
 	private String minimal;
 
 	//bi-directional many-to-one association to Question

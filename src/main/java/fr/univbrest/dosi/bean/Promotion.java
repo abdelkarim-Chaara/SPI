@@ -2,6 +2,11 @@ package fr.univbrest.dosi.bean;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +41,7 @@ public class Promotion implements Serializable {
 	private String lieuRentree;
 
 	@Column(name="NB_MAX_ETUDIANT")
-	private int nbMaxEtudiant;
+	private BigDecimal nbMaxEtudiant;
 
 	@Column(name="PROCESSUS_STAGE")
 	private String processusStage;
@@ -46,25 +51,19 @@ public class Promotion implements Serializable {
 
 	//bi-directional many-to-one association to Candidat
 	@OneToMany(mappedBy="promotion")
+	@JsonIgnore
 	private List<Candidat> candidats;
 
 	//bi-directional many-to-one association to Etudiant
 	@OneToMany(mappedBy="promotion")
+	@JsonIgnore
 	private List<Etudiant> etudiants;
-
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="promotion")
-	private List<Evaluation> evaluations;
 
 	//bi-directional many-to-one association to Enseignant
 	@ManyToOne
 	@JoinColumn(name="NO_ENSEIGNANT")
+	@JsonIgnore
 	private Enseignant enseignant;
-
-	//bi-directional many-to-one association to Formation
-	@ManyToOne
-	@JoinColumn(name="CODE_FORMATION")
-	private Formation formation;
 
 	public Promotion() {
 	}
@@ -117,11 +116,11 @@ public class Promotion implements Serializable {
 		this.lieuRentree = lieuRentree;
 	}
 
-	public int getNbMaxEtudiant() {
+	public BigDecimal getNbMaxEtudiant() {
 		return this.nbMaxEtudiant;
 	}
 
-	public void setNbMaxEtudiant(int nbMaxEtudiant) {
+	public void setNbMaxEtudiant(BigDecimal nbMaxEtudiant) {
 		this.nbMaxEtudiant = nbMaxEtudiant;
 	}
 
@@ -185,28 +184,6 @@ public class Promotion implements Serializable {
 		return etudiant;
 	}
 
-	public List<Evaluation> getEvaluations() {
-		return this.evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public Evaluation addEvaluation(Evaluation evaluation) {
-		getEvaluations().add(evaluation);
-		evaluation.setPromotion(this);
-
-		return evaluation;
-	}
-
-	public Evaluation removeEvaluation(Evaluation evaluation) {
-		getEvaluations().remove(evaluation);
-		evaluation.setPromotion(null);
-
-		return evaluation;
-	}
-
 	public Enseignant getEnseignant() {
 		return this.enseignant;
 	}
@@ -215,12 +192,12 @@ public class Promotion implements Serializable {
 		this.enseignant = enseignant;
 	}
 
-	public Formation getFormation() {
-		return this.formation;
+	public Promotion(PromotionPK id, String processusStage, String siglePromotion) {
+		super();
+		this.id = id;
+		this.processusStage = processusStage;
+		this.siglePromotion = siglePromotion;
 	}
-
-	public void setFormation(Formation formation) {
-		this.formation = formation;
-	}
+	
 
 }
