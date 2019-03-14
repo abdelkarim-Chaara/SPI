@@ -17,7 +17,7 @@ public class CgRefCode implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_CGRC", unique=true, nullable=false)
-	private int idCgrc;
+	private Integer idCgrc;
 
 	@Column(name="RV_ABBREVIATION", length=240)
 	private String rvAbbreviation;
@@ -37,11 +37,11 @@ public class CgRefCode implements Serializable {
 	public CgRefCode() {
 	}
 
-	public int getIdCgrc() {
+	public Integer getIdCgrc() {
 		return this.idCgrc;
 	}
 
-	public void setIdCgrc(int idCgrc) {
+	public void setIdCgrc(Integer idCgrc) {
 		this.idCgrc = idCgrc;
 	}
 
